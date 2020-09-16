@@ -1,0 +1,104 @@
+I"�%<p>As we were nearing the end of lockdown in England, there was concern about how social distancing regulations would impact places of worship – could these old and heavy buildings contain entire congregations of worshipers in full? Well, possibly. What helped was that the government had specified that households could sit together. Perhaps by grouping households together, the availability of space could be maximised without putting anyone in any danger of catching corona virus.</p>
+
+<p>To leverage data analytics to do this, before even beginning to analyse capacity and create seating plans, we would need to first create a spatial object that represented the church. My church, St Bart’s in London, was happy to play guinea pig and very kindly offered me their blueprints.</p>
+
+<p>Much of what I’ve done I’ve done via adapting the formulae described in this web page written by <a href="https://www.movable-type.co.uk/scripts/latlong.html"><strong>Chris Veness</strong></a>  which proved an invaluable resource.</p>
+
+<p>First thing’s first, I took out a pencil, ruler, and protractor. My methodology was to pinpoint a start-point at the centre of the building and then identify points for each and every twist, turn and corner of the building.</p>
+
+<p>My data ended up looking like this:</p>
+
+<p><img src="/images/160920.start.png" alt="" /></p>
+
+<p>From my centre point I was calculating the distance in cm to each point – every corner – and then the angle with north being 90° and south 180°.</p>
+
+<p>Each point had a POINT ID I could later use for the sequential order of my points.</p>
+
+<p>In terms of data prep, the first step was to convert those angles into degrees bearing and then into radians, which I did in three steps:</p>
+
+<h5 id="degrees-bearing">Degrees Bearing</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="no">ANGLE</span><span class="p">]</span> <span class="o">-</span> <span class="mi">90</span></code></pre></figure>
+
+<h5 id="degrees-bearing-1">Degrees Bearing</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">IF</span> <span class="p">[</span><span class="no">Degrees</span> <span class="no">Bearing</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="no">THEN</span>
+<span class="mi">360</span> <span class="o">-</span> <span class="no">ABS</span><span class="p">([</span><span class="no">Degrees</span> <span class="no">Bearing</span><span class="p">])</span>
+<span class="no">ELSE</span> <span class="p">[</span><span class="no">Degrees</span> <span class="no">Bearing</span><span class="p">]</span>
+<span class="no">ENDIF</span></code></pre></figure>
+
+<h5 id="degrees-bearing-2">Degrees Bearing</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="no">Degrees</span> <span class="no">Bearing</span><span class="p">]</span> <span class="o">*</span> <span class="no">PI</span><span class="p">()</span><span class="o">/</span><span class="mi">180</span></code></pre></figure>
+
+<p><img src="/images/160920.degrees.png" alt="" /></p>
+
+<p>Next up, what I had to do was convert my CMs into kilometres, this was done by simply multiplying the CMs by the scale of the blueprints (which we got wrong at first, but never mind, easily changed once we turned this into an app and allowed the user to input their own scale) and then divide that figure by 1000.</p>
+
+<h5 id="kilometers">Kilometers</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">([</span><span class="no">CM</span><span class="p">]</span> <span class="o">*</span> <span class="mf">4.73</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span></code></pre></figure>
+
+<p>Once all that was done, I used a map input to select a random point in the church (which would act as my centre-point, there was no need to actually be accurate at all here, but some accuracy does help if you want to compare).</p>
+
+<p><img src="/images/160920.map.png" alt="" /></p>
+
+<p>I then used the spatial info tool to extract the longitude and latitude (named Lat and Long) and then appended this to my church points data.</p>
+
+<p>Before I moved on I had to do was just figure out the earth’s bearing in London, not a nice task, but luckily a <a href="https://rechneronline.de/earth-radius/"><strong>website</strong></a> was willing to do it for me.</p>
+
+<p><img src="/images/160920.fullflow.png" alt="" /></p>
+
+<p>Then came the big stuff:</p>
+
+<ol>
+  <li>I had to turn my latitudes and longitudes into radians</li>
+</ol>
+
+<h5 id="lat">Lat</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="no">Lat</span><span class="p">]</span> <span class="o">*</span> <span class="no">PI</span><span class="p">()</span><span class="o">/</span><span class="mi">180</span></code></pre></figure>
+
+<h5 id="long">Long</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="no">Long</span><span class="p">]</span> <span class="o">*</span> <span class="no">PI</span><span class="p">()</span><span class="o">/</span><span class="mi">180</span></code></pre></figure>
+
+<ol>
+  <li>Work out the new longitudes and latitudes using my centre point, angles, CMs and the earth’s bearing in London (6365.086, so replace this number with that of your own location).</li>
+</ol>
+
+<h5 id="new-lat">New Lat</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">ASIN</span><span class="p">(</span><span class="no">SIN</span><span class="p">([</span><span class="no">Lat</span><span class="p">])</span> <span class="o">*</span> <span class="no">COS</span><span class="p">([</span><span class="no">Kilometers</span><span class="p">]</span><span class="o">/</span><span class="mf">6365.086</span><span class="p">)</span><span class="o">+</span><span class="no">COS</span><span class="p">([</span><span class="no">Lat</span><span class="p">])</span> <span class="o">*</span> <span class="no">SIN</span><span class="p">([</span><span class="no">Kilometers</span><span class="p">]</span><span class="o">/</span><span class="mf">6365.086</span><span class="p">)</span> <span class="o">*</span> <span class="no">COS</span><span class="p">([</span><span class="no">Degrees</span> <span class="no">Bearing</span><span class="p">]))</span></code></pre></figure>
+
+<h5 id="new-long">New Long</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="no">Long</span><span class="p">]</span> <span class="o">+</span> <span class="no">ATAN2</span><span class="p">(</span><span class="no">SIN</span><span class="p">([</span><span class="no">Degrees</span> <span class="no">Bearing</span><span class="p">])</span> <span class="o">*</span> <span class="no">SIN</span><span class="p">([</span><span class="no">Kilometers</span><span class="p">]</span><span class="o">/</span><span class="mf">6365.086</span><span class="p">)</span> <span class="o">*</span> <span class="no">COS</span><span class="p">([</span><span class="no">Lat</span><span class="p">]),</span> <span class="no">COS</span><span class="p">([</span><span class="no">Kilometers</span><span class="p">]</span><span class="o">/</span><span class="mf">6365.086</span><span class="p">)</span> <span class="o">-</span> <span class="no">SIN</span><span class="p">([</span><span class="no">Lat</span><span class="p">])</span> <span class="o">*</span> <span class="no">SIN</span><span class="p">([</span><span class="no">New</span> <span class="no">Lat</span><span class="p">]))</span></code></pre></figure>
+
+<ol>
+  <li>Convert these new longitudes and latitudes back (i.e. not radians)</li>
+</ol>
+
+<h5 id="new-lat-1">New Lat</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="no">New</span> <span class="no">Lat</span><span class="p">]</span> <span class="o">*</span> <span class="mi">180</span><span class="o">/</span><span class="no">PI</span><span class="p">()</span></code></pre></figure>
+
+<h5 id="new-long-1">New Long</h5>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="no">New</span> <span class="no">Long</span><span class="p">]</span> <span class="o">*</span> <span class="mi">180</span><span class="o">/</span><span class="no">PI</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="/images/160920.latlong.png" alt="" /></p>
+
+<p>The next step was to use the Create Points tool to turn my New Long and New Lat into spatial points, and then use PolyBuild to use those spatial points to create a polygon object (with my Point ID as the Sequence Field).</p>
+
+<p><img src="/images/160920.mppd.png" alt="" /></p>
+
+<p>Our end product was exactly what we wanted:</p>
+
+<p><img src="/images/160920.end.png" alt="" /></p>
+
+<p>Because our scale was wrong, the polygon object ended up being smaller than the actual church, but once we started using the workflow as an app, that was easily solved. The next step was to go through this process again (just copying and pasting a lot of tools) to create ‘exclusion zones’, objects within the church that made it impossible to sit in a certain location.</p>
+
+<p>In a following blog, I’ll explain how I used this to create an app that allocated socially-distanced seating.</p>
+
+:ET
