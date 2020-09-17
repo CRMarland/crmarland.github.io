@@ -16,7 +16,7 @@ First thing’s first, I took out a pencil, ruler, and protractor. My methodolog
 
 My data ended up looking like this:
 
-![]({{site.baseurl}}/images/160920.start.png)
+![]({{site.baseurl}}/images/160920.start.PNG)
 
 From my centre point I was calculating the distance in cm to each point – every corner – and then the angle with north being 90° and south 180°.
 
@@ -43,7 +43,7 @@ ENDIF
 [Degrees Bearing] * PI()/180
 {% endhighlight %}
 
-![]({{site.baseurl}}/images/160920.degrees.png)
+![]({{site.baseurl}}/images/160920.degrees.PNG)
 
 Next up, what I had to do was convert my CMs into kilometres, this was done by simply multiplying the CMs by the scale of the blueprints (which we got wrong at first, but never mind, easily changed once we turned this into an app and allowed the user to input their own scale) and then divide that figure by 1000.
 
@@ -55,13 +55,13 @@ Next up, what I had to do was convert my CMs into kilometres, this was done by s
 
 Once all that was done, I used a map input to select a random point in the church (which would act as my centre-point, there was no need to actually be accurate at all here, but some accuracy does help if you want to compare).
 
-![]({{site.baseurl}}/images/160920.map.png)
+![]({{site.baseurl}}/images/160920.map.PNG)
 
 I then used the spatial info tool to extract the longitude and latitude (named Lat and Long) and then appended this to my church points data.
 
 Before I moved on I had to do was just figure out the earth’s bearing in London, not a nice task, but luckily a [**website**][website] was willing to do it for me.
 
-![]({{site.baseurl}}/images/160920.fullflow.png)
+![]({{site.baseurl}}/images/160920.fullflow.PNG)
 
 Then came the big stuff:
 
@@ -112,7 +112,7 @@ The next step was to use the Create Points tool to turn my New Long and New Lat 
 
 Our end product was exactly what we wanted:
 
-![]({{site.baseurl}}/images/160920.end.png)
+![]({{site.baseurl}}/images/160920.end.PNG)
 
 Because our scale was wrong, the polygon object ended up being smaller than the actual church, but once we started using the workflow as an app, that was easily solved. The next step was to go through this process again (just copying and pasting a lot of tools) to create 'exclusion zones', objects within the church that made it impossible to sit in a certain location.
 
