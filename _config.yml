@@ -1,8 +1,8 @@
 title: Marlandata
 logo: "images/logo.svg" # You can add own logo image.
 description: A blog to share thoughts, knowledge and techniques from the world of data.
-baseurl: "/marlandata" # The subpath of your site, e.g. /blog
-url: "crmarland.github.io" # The base hostname & protocol for your site, e.g. http://example.com
+baseurl: "" # The subpath of your site, e.g. /blog
+url: "" # The base hostname & protocol for your site, e.g. http://example.com
 
 # Author Settings
 author:
