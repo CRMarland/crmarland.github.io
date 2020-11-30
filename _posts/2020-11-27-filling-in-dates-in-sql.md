@@ -6,7 +6,6 @@ image:  images/271120-cal.jpg
 tags:   [SQL]
 ---
 
-![]({{site.baseurl}}/images/271120-cal.jpg)
 <span>Photo by <a href="https://unsplash.com/@waldemarbrandt67w?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Waldemar Brandt</a> on <a href="https://unsplash.com/s/photos/calendar?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 
 A few months ago, for the sake of learning SQL, I started doing Preppin’ Data challenges via SQL. A method that I found incredibly effective after months and months during lockdown where I’d read endless PDF textbooks about theory. 
