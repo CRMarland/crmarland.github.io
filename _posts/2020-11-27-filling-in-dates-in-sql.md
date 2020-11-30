@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Building a Socially Distanced Seat Allocator in Alteryx"
+title:  "Filling in Missing Dates in SQL"
 date:   2020-09-28
 image:  images/271120-cal.jpg
 tags:   [SQL]
