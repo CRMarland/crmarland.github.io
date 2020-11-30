@@ -11,13 +11,13 @@ tags:   [SQL]
 A few months ago, for the sake of learning SQL, I started doing Preppin’ Data challenges via SQL. A method that I found incredibly effective after months and months during lockdown where I’d read endless PDF textbooks about theory. 
 While doing [**Week 7’s challenge**][pd-w7], I found myself using a technique I learn from [**Sanjay Mistry**][sanj], an old colleague and veritable master of SQL. The technique fills in missing dates when those missing dates are needed.To explain the challenge, let me show you the before and after. 
 
-####BEFORE:
+#### BEFORE:
 
 ![]({{site.baseurl}}/images/271120-starts.png)
 
 The start files consisted of a current employee table (left) and leavers (right)
 
-####AFTER:
+#### AFTER:
 
 The challenge was to give a month-by-month account of how many staff were employed each month, average salary of those employees, and total salary
 
