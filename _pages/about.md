@@ -22,6 +22,6 @@ Next thing I know, I'm hooked to Tableau. MakeoverMonday, ThrowbackThursday, Iro
 
 Right now, I'm working for The Information Lab as a Data Consultant, principally consulting on Tableau and Alteryx. But the amazing thing about the place I work is the collegiate environment it has built up under the stewardship of Tom, Craig and Robin. 
 
-Within TIL I've been able to build up knowledge in SQL, Python (principally Pandas) and AWS. 
+Within TIL I've been able to build up knowledge in SQL, Python and AWS. 
 
 My hope with this blog is to be able to showcase my skills beyond my more visual Tableau Public profile, and share the knowledge I've learnt and developed with others. The amazing thing about the world of data (and tech in general) is the collective penchant for knowledge sharing. Each of us understands that it's free information contained in blog after blog that propels our industry forward.
