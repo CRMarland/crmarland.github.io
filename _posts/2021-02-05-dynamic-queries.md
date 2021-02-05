@@ -2,7 +2,7 @@
 layout: post
 title:  "Using Dynamic SQL Queries to Change Column Headers to Rows"
 date:   2021-02-05
-image:  images/050221.jpg
+image:  images/050221-stars.jpg
 tags:   [SQL]
 ---
 
