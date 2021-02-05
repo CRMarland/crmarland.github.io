@@ -81,7 +81,7 @@ Once written I then create a table variable and insert into that table an execut
 
 This is repeated another two times, and the results are then combined in a CTE
 
-```
+~~~
 WITH DateSigns2 AS (
 				SELECT * FROM @T1
 				UNION
@@ -89,7 +89,7 @@ WITH DateSigns2 AS (
 				UNION
 				SELECT * FROM @T3
 				),
-```
+~~~
 
 Producing the following: 
 
