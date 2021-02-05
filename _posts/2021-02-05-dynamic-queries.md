@@ -35,11 +35,13 @@ SET @Command3 = 'SELECT [' + (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
 DECLARE @T3 table (Sign varchar(20), Date varchar(20))
 INSERT @T3 EXEC (@Command3);
 ```
+
 Above is the query I ended up writing – convoluted, I know, but I’ll break it down in step by step.
 
 ```
 DECLARE @Command1 varchar(1000)
 ```
+
 
 I’d think of this as a statement of intention, I’m basically saying I’m creating a local variable, it’s going to be a string, and I expect I won’t need more than 1,000 characters.
 
@@ -47,6 +49,7 @@ I’d think of this as a statement of intention, I’m basically saying I’m cr
 SET @Command1 = 'SELECT [' + (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'OldStarSigns' AND ORDINAL_POSITION = 1) + '] AS Sign, [' +
 (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'OldStarSigns' AND ORDINAL_POSITION = 2) + '] AS Date FROM OldStarSigns;'
 ```
+
 
 Here, I am creating the string itself, building a query that I want to run where I don’t know what the values might be. 
 
@@ -60,11 +63,13 @@ SELECT [‘ (…) ‘] AS Sign, [‘ (…) ‘] AS Date FROM OldStarSigns;’ �
 SELECT COLUMN_NAME FROM INFORMATION_SCHEMA WHERE TABLE_NAME = ‘OldStarSigns’ AND ORDINAL POSITION = 1
 ```
 
+
 Here I am querying SQL Server’s Information Schema asking it to give me the name of the first column.
 
 ```
 SELECT COLUMN_NAME FROM INFORMATION_SCHEMA WHERE TABLE_NAME = ‘OldStarSigns’ AND ORDINAL POSITION = 2
 ```
+
 
 And here I’m asking for it to give me the name of the second column.
 
@@ -75,13 +80,15 @@ DECLARE @T1 table (Sign varchar(20), Date varchar(20))
 INSERT @T1 EXEC (@Command1)
 ```
 
+
 Once written I then create a table variable and insert into that table an execution of the query I built above. 
 
 ![]({{site.baseurl}}/images/050221-QueryResult.PNG)
 
+
 This is repeated another two times, and the results are then combined in a CTE
 
-~~~
+```
 WITH DateSigns2 AS (
 				SELECT * FROM @T1
 				UNION
@@ -89,7 +96,8 @@ WITH DateSigns2 AS (
 				UNION
 				SELECT * FROM @T3
 				),
-~~~
+```
+
 
 Producing the following: 
 
@@ -104,6 +112,7 @@ StarDates1 AS (
 				WHERE TABLE_NAME = 'OldStarSigns' AND COLUMN_NAME LIKE '%[^a-zA-Z]%'),
 ```
 
+
 Then summoned all the star signs
 
 ```
@@ -113,6 +122,7 @@ StarSigns1 AS (
 				WHERE TABLE_NAME = 'OldStarSigns' AND COLUMN_NAME NOT LIKE '%[^a-zA-Z]%'),
 ```
 
+
 And after that, joined them together (notice how I used the ORIGINAL_POSITION -1 for even numbers so that they would correspond to the odd numbers in a join).
 
 ```
@@ -121,6 +131,7 @@ DateSigns1 AS (
 				FROM StarDates1 a
 				INNER JOIN StarSigns1 b ON a.Pos = b.Pos),
 ```
+
 
 The end result ended up looking like this
 
@@ -138,6 +149,7 @@ DateSigns AS (
 				),
 ```
 
+
 Producing an output like this:
 
 ![]({{site.baseurl}}/images/050221-DateSigns.PNG)
@@ -150,5 +162,7 @@ P.S. Another trick I learnt in the solving of this challenge is that if you want
 ```
 ROW_NUMBER() OVER (ORDER BY (SELECT 100)) AS Row_ID
 ```
+
+
 
 [pd-w53]:https://preppindata.blogspot.com/2020/12/2020-week-53.html
