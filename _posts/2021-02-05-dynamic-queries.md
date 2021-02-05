@@ -6,7 +6,7 @@ image:  images/050221.jpg
 tags:   [SQL]
 ---
 
-<span>Photo by <a href="https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jeremy Thomas</a> on <a href="https://unsplash.com/s/photos/stars?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+Photo by Frank Cone from Pexels
 
 Although designed for Tableau Prep, I find Carl Allchin, Jenny Martin, Jonathan Allenby and Tom Prowse’s Preppin’ Data challenges really good for flexing SQL muscles. I decided I wanted to experiment a little with dynamic queries and [**2020 Week 53’s challenge**][pd-w53] provided nice ground to play around with.  
 
@@ -152,7 +152,7 @@ P.S. Another trick I learnt in the solving of this challenge is that if you want
 ```sql
 ROW_NUMBER() OVER (ORDER BY (SELECT 100)) AS Row_ID
 ```
-
+<br>
 
 
 [pd-w53]:https://preppindata.blogspot.com/2020/12/2020-week-53.html
