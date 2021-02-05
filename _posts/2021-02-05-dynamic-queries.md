@@ -35,22 +35,20 @@ SET @Command3 = 'SELECT [' + (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
 DECLARE @T3 table (Sign varchar(20), Date varchar(20))
 INSERT @T3 EXEC (@Command3);
 ```
-
+<br>
 Above is the query I ended up writing – convoluted, I know, but I’ll break it down in step by step.
 
 ```sql
 DECLARE @Command1 varchar(1000)
 ```
-
-
+<br>
 I’d think of this as a statement of intention, I’m basically saying I’m creating a local variable, it’s going to be a string, and I expect I won’t need more than 1,000 characters.
 
 ```sql
 SET @Command1 = 'SELECT [' + (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'OldStarSigns' AND ORDINAL_POSITION = 1) + '] AS Sign, [' +
 (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'OldStarSigns' AND ORDINAL_POSITION = 2) + '] AS Date FROM OldStarSigns;'
 ```
-
-
+<br>
 Here, I am creating the string itself, building a query that I want to run where I don’t know what the values might be. 
 
 I start with SET @Command1 = because this is going to tell MS SQL Server I want to now add a string into the local variable I’ve just declared.
@@ -62,15 +60,13 @@ SELECT [‘ (…) ‘] AS Sign, [‘ (…) ‘] AS Date FROM OldStarSigns;’ �
 ```sql
 SELECT COLUMN_NAME FROM INFORMATION_SCHEMA WHERE TABLE_NAME = ‘OldStarSigns’ AND ORDINAL POSITION = 1
 ```
-
-
+<br>
 Here I am querying SQL Server’s Information Schema asking it to give me the name of the first column.
 
 ```sql
 SELECT COLUMN_NAME FROM INFORMATION_SCHEMA WHERE TABLE_NAME = ‘OldStarSigns’ AND ORDINAL POSITION = 2
 ```
-
-
+<br>
 And here I’m asking for it to give me the name of the second column.
 
 The end product of this is a string that reads “SELECT [Aquarius] AS Sign, [1/20–2/19] AS Date FROM OldStarSigns;”
@@ -79,8 +75,7 @@ The end product of this is a string that reads “SELECT [Aquarius] AS Sign, [1/
 DECLARE @T1 table (Sign varchar(20), Date varchar(20))
 INSERT @T1 EXEC (@Command1)
 ```
-
-
+<br>
 Once written I then create a table variable and insert into that table an execution of the query I built above. 
 
 ![]({{site.baseurl}}/images/050221-QueryResult.PNG)
@@ -97,8 +92,7 @@ WITH DateSigns2 AS (
 				SELECT * FROM @T3
 				),
 ```
-
-
+<br>
 Producing the following: 
 
 ![]({{site.baseurl}}/images/050221-DateSigns2.PNG)
@@ -111,8 +105,7 @@ StarDates1 AS (
 				FROM INFORMATION_SCHEMA.COLUMNS
 				WHERE TABLE_NAME = 'OldStarSigns' AND COLUMN_NAME LIKE '%[^a-zA-Z]%'),
 ```
-
-
+<br>
 Then summoned all the star signs
 
 ```sql
@@ -121,8 +114,7 @@ StarSigns1 AS (
 				FROM INFORMATION_SCHEMA.COLUMNS
 				WHERE TABLE_NAME = 'OldStarSigns' AND COLUMN_NAME NOT LIKE '%[^a-zA-Z]%'),
 ```
-
-
+<br>
 And after that, joined them together (notice how I used the ORIGINAL_POSITION -1 for even numbers so that they would correspond to the odd numbers in a join).
 
 ```sql
@@ -132,7 +124,6 @@ DateSigns1 AS (
 				INNER JOIN StarSigns1 b ON a.Pos = b.Pos),
 ```
 <br>
-
 The end result ended up looking like this
 
 ![]({{site.baseurl}}/images/050221-QueryResult.PNG)
@@ -149,7 +140,6 @@ DateSigns AS (
 				),
 ```
 <br>
-
 Producing an output like this:
 
 ![]({{site.baseurl}}/images/050221-DateSigns.PNG)
