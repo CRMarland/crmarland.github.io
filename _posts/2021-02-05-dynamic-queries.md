@@ -131,7 +131,7 @@ DateSigns1 AS (
 				FROM StarDates1 a
 				INNER JOIN StarSigns1 b ON a.Pos = b.Pos),
 ```
-
+<br>
 
 The end result ended up looking like this
 
@@ -148,7 +148,7 @@ DateSigns AS (
 				FROM DateSigns2
 				),
 ```
-
+<br>
 
 Producing an output like this:
 
