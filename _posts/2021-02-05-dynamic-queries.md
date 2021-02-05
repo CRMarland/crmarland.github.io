@@ -16,7 +16,7 @@ The essence of the challenge is that you have 3 inputs: old star sign date range
 
 While it might be a slightly convoluted use case, it was a nice opportunity to play around. In this scenario, simply renaming the column headers would lose us 3 rows of data. Sure, we could just use a bit of copying and pasting, but what would be the fun in that?
 
-```
+```sql
 DECLARE @Command1 varchar(1000)
 SET @Command1 = 'SELECT [' + (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'OldStarSigns' AND ORDINAL_POSITION = 1) + '] AS Sign, [' +
 (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'OldStarSigns' AND ORDINAL_POSITION = 2) + '] AS Date FROM OldStarSigns;'
@@ -38,14 +38,14 @@ INSERT @T3 EXEC (@Command3);
 
 Above is the query I ended up writing – convoluted, I know, but I’ll break it down in step by step.
 
-```
+```sql
 DECLARE @Command1 varchar(1000)
 ```
 
 
 I’d think of this as a statement of intention, I’m basically saying I’m creating a local variable, it’s going to be a string, and I expect I won’t need more than 1,000 characters.
 
-```
+```sql
 SET @Command1 = 'SELECT [' + (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'OldStarSigns' AND ORDINAL_POSITION = 1) + '] AS Sign, [' +
 (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'OldStarSigns' AND ORDINAL_POSITION = 2) + '] AS Date FROM OldStarSigns;'
 ```
@@ -59,14 +59,14 @@ Then I start construction of the string.
 
 SELECT [‘ (…) ‘] AS Sign, [‘ (…) ‘] AS Date FROM OldStarSigns;’ – this is a classic query, the interesting bit is what does inside the two (…)s.
 
-```
+```sql
 SELECT COLUMN_NAME FROM INFORMATION_SCHEMA WHERE TABLE_NAME = ‘OldStarSigns’ AND ORDINAL POSITION = 1
 ```
 
 
 Here I am querying SQL Server’s Information Schema asking it to give me the name of the first column.
 
-```
+```sql
 SELECT COLUMN_NAME FROM INFORMATION_SCHEMA WHERE TABLE_NAME = ‘OldStarSigns’ AND ORDINAL POSITION = 2
 ```
 
@@ -75,7 +75,7 @@ And here I’m asking for it to give me the name of the second column.
 
 The end product of this is a string that reads “SELECT [Aquarius] AS Sign, [1/20–2/19] AS Date FROM OldStarSigns;”
 
-```
+```sql
 DECLARE @T1 table (Sign varchar(20), Date varchar(20))
 INSERT @T1 EXEC (@Command1)
 ```
@@ -88,7 +88,7 @@ Once written I then create a table variable and insert into that table an execut
 
 This is repeated another two times, and the results are then combined in a CTE
 
-```
+```sql
 WITH DateSigns2 AS (
 				SELECT * FROM @T1
 				UNION
@@ -105,7 +105,7 @@ Producing the following:
 
 After that, I summoned all the dates
 
-```
+```sql
 StarDates1 AS (
 				SELECT COLUMN_NAME AS Dates, ORDINAL_POSITION - 1 AS Pos
 				FROM INFORMATION_SCHEMA.COLUMNS
@@ -115,7 +115,7 @@ StarDates1 AS (
 
 Then summoned all the star signs
 
-```
+```sql
 StarSigns1 AS (
 				SELECT COLUMN_NAME AS Sign, ORDINAL_POSITION AS Pos
 				FROM INFORMATION_SCHEMA.COLUMNS
@@ -125,7 +125,7 @@ StarSigns1 AS (
 
 And after that, joined them together (notice how I used the ORIGINAL_POSITION -1 for even numbers so that they would correspond to the odd numbers in a join).
 
-```
+```sql
 DateSigns1 AS (
 				SELECT Sign, Dates
 				FROM StarDates1 a
@@ -139,7 +139,7 @@ The end result ended up looking like this
 
 Which could then be unioned with my DateSigns2 table (this was all the star signs that weren’t column headers)
 
-```
+```sql
 DateSigns AS (
 				SELECT *
 				FROM DateSigns1
@@ -159,7 +159,7 @@ While this was by no means the most efficient way of solving this problem, but t
 
 P.S. Another trick I learnt in the solving of this challenge is that if you want to add a new row ID that mirrors the row index on the left hand side, you can do so by adding the following:
 
-```
+```sql
 ROW_NUMBER() OVER (ORDER BY (SELECT 100)) AS Row_ID
 ```
 
