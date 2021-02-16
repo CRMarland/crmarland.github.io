@@ -5,7 +5,7 @@ date:   2021-02-17
 image:  images/170221-cover.PNG
 tags:   [AWS]
 ---
-#The Basics
+# The Basics
 
 CloudFormation is an AWS service that allows you to provision resources using code quickly and consistently. By building templates you can model your architecture once and deploy as many times as you wish. Better yet, while this might sound restrictive, you can add parameters to your scripts that allow you/clients/others in your organisation to vary the deployment of your templates according to values you specify.
 
@@ -25,10 +25,10 @@ When you come to create a stack you can do so in three ways:
 
 Whichever you chose is up to you, I can see the benefits of both Template is ready and Create template in Designer, my suggestion is that you play around with them and see which one takes your fancy.
 
-#Writing the Code
+# Writing the Code
 
 Your script can either be in JSON or YAML. Personally, I find YAML easier to write and easier for other people to read and so that’s my preference, but I’ll present both in this blog.
-#####YAML
+##### YAML
 ```yml
 AWSTemplateFormatVersion: "2010-09-09"
 Description: A template for creating an EC2 t2 instance in CloudFormation
@@ -173,7 +173,7 @@ Outputs:
         - PublicIp
 ```
 <br>
-#####JSON
+##### JSON
 ```json
 {
     "AWSTemplateFormatVersion": "2010-09-09",
@@ -389,33 +389,33 @@ Outputs:
 }
 ```
 <br>
-##Format Version
+## Format Version
 At the time of writing, the only valid template format version was “2010-09-09” and so there’s no need to worry too much about this section of the code. In theory, this part identifies the capabilities of the template, if another improved format version is released in the future then I imagine you may want to put that value in instead, but, as you can see, it’s been the same format version for over ten years.
-#####YAML
+##### YAML
 ```yml
 AWSTemplateFormatVersion: "2010-09-09"
 ```
 <br>
-#####JSON
+##### JSON
 ```json
 "AWSTemplateFormatVersion": "2010-09-09"
 ```
 <br>
-##Description
+## Description
 Here you can write a little bit of documentation in the template itself (which is always a good idea) this is the place to do it. Normally a line or two about the purpose of the template should suffice.
-#####YAML
+##### YAML
 ```yml
 Description: A template for creating an EC2 t2 instance in CloudFormation
 ```
 <br>
-#####JSON
+##### JSON
 ```json
 "Description": "A template for creating an EC2 t2 instance in CloudFormation"
 ```
 <br>
-##Parameters
+## Parameters
 Here is where you can add some customisability into your templates, this is where you can determine what values users will be allowed to select. In terms of formatting, you will specify the name of the parameter and then after the colon you specify the description, type, default value, allowed values, an allowed pattern (this must be a regular expression) and a constraint description. 
-#####YAML
+##### YAML
 ```yml
 Parameters:
   KeyName:
@@ -452,7 +452,7 @@ Parameters:
     ConstraintDescription: must specify prod or test.
 ```
 <br>
-#####JSON
+##### JSON
 ```json
 "Parameters": {
     "KeyName": {
@@ -498,22 +498,22 @@ If done right, when deploying a stack, you should get a view like this:
 ![]({{site.baseurl}}/images/170221-parameters.PNG)
  
 In the resources section, you will need to reference your parameters with either:
-#####YAML
+##### YAML
 ```yml
 Ref: YourParameterName
 ```
 <br>
-#####JSON
+##### JSON
 ```json
 {
 “Ref”: “YourParameterName”
 }
 ```
 <br>
-##Rules
+## Rules
 Now you’ve written your parameters, you may want to validate them according to some criteria, this is where you can do that validation. Rules can contain a rule condition which is where you specify under which conditions certain rules apply (this can allow you to create forbidden combinations “if parameter 1 = x, then rule = y”, and must contain an assertion, which is where you specify the rule itself.
 In the following I’ve specified that the KeyName must include ‘training’.
-#####YAML
+##### YAML
 ```yml
 Rules:
   InstanceRegion:
@@ -525,7 +525,7 @@ Rules:
       AssertDescription: 'KeyPair name must include the word "training" '
 ```
 <br>
-#####JSON
+##### JSON
 ```json
 "Rules": {
     "InstanceRegion": {
@@ -539,9 +539,9 @@ Rules:
   },
 ```
 <br>
-##Mappings
+## Mappings
 Mappings matches a key to a value or a set of values. You can then use the Fn::FindInMap function to retrieve values in a map. Think of this as a section that allows us CASE functionality. In the following, we specify the various components of the AMI according to instance type and AWS region.
-#####YAML
+##### YAML
 ```yml
 Mappings:
   AWSInstanceType2Arch:
@@ -582,7 +582,7 @@ Mappings:
       HVM64: ami-ea26ce85
 ```
 <br>
-#####JSON
+##### JSON
 ```json
   "Mappings": {
     "AWSInstanceType2Arch": {
@@ -642,9 +642,9 @@ Mappings:
   },
 ```
 <br>
-##Conditions
+## Conditions
 In the conditions section you can specify the conditions under which certain resources are created. Perhaps in a test environment you want a smaller database and in a prod environment you can a bigger database – this is where you would create this kind of logic. You create the condition in this section, and then reference it by adding a Condition value in your Resources section.
-#####YAML
+##### YAML
 ```yml
 Conditions:
   CreateProdResources: Fn::Equals
@@ -652,16 +652,16 @@ Conditions:
     - prod
 ```
 <br>
-#####JSON
+##### JSON
 ```json
  "Conditions": {
     "CreateProdResources": "Fn::Equals - !Ref EnvType - prod"
   },
 ```
 <br>
-##Resources
+## Resources
 This is where the real action happens. This is where the actual resources you want to be provisioned are defined. For a lot of this, you’ll want to be making reference back to your parameters, mappings and conditions with either a Ref statement or a Fn::FindInMap statement for mappings.
-#####YAML
+##### YAML
 ```yml
 Resources:
   InstanceSecurityGroup:
@@ -699,7 +699,7 @@ Resources:
               - Arch
 ```
 <br>
-#####JSON
+##### JSON
 ```json
   "Resources": {
     "InstanceSecurityGroup": {
@@ -762,9 +762,11 @@ Resources:
   },
 ```
 <br>
-##Outputs
+
+## Outputs
 Outputs allows you to export out some metadata about your stacks and the resources you provision. These can then be referenced in other stacks with the Fn::ImportValue function or simply shown on the CloudFormation console under stack properties.
-#####YAML
+
+##### YAML
 ```yml
 Outputs:
   InstanceId:
@@ -791,7 +793,7 @@ Outputs:
         - PublicIp
 ```
 <br>
-#####JSON
+##### JSON
 ```json
 "Outputs": {
     "InstanceId": {
@@ -822,7 +824,7 @@ Outputs:
 ```
 <br>
 
-#Finishing Off
+# Finishing Off
 
 Hopefully, this will have provided some help getting your head around the basics of CloudFront templates. It took me a couple of days to feel as if I really understood what was going on. AWS documentation can feel a little impenetrable sometimes and takes a little bit of getting used to.
 
