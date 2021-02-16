@@ -510,7 +510,7 @@ Ref: YourParameterName
 ```
 <br>
 ##### JSON
-```json
+```
 “Ref”: “YourParameterName”
 ```
 <br>
