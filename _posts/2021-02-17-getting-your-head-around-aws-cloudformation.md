@@ -495,7 +495,7 @@ Parameters:
       "AllowedValues": ["prod", "test"],
       "ConstraintDescription": "must specify prod or test."
     }
-  },
+  }
 ```
 <br>
 If done right, when deploying a stack, you should get a view like this:
@@ -511,9 +511,7 @@ Ref: YourParameterName
 <br>
 ##### JSON
 ```json
-{
 “Ref”: “YourParameterName”
-}
 ```
 <br>
 ## Rules
@@ -544,7 +542,7 @@ Rules:
         "AssertDescription": "KeyPair name must include the word \"training\" "
       }
     }
-  },
+  }
 ```
 <br>
 ## Mappings
@@ -649,7 +647,7 @@ Mappings:
         "HVM64": "ami-ea26ce85"
       }
     }
-  },
+  }
 ```
 <br>
 ## Conditions
@@ -771,7 +769,7 @@ Resources:
         }
       }
     }
-  },
+  }
 ```
 <br>
 
