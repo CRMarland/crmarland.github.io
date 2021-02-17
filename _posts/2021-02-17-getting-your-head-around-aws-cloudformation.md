@@ -843,3 +843,4 @@ What I realised is key is understanding that the various sections of the templat
 
 Once you understand all of this, it’s all about digging deep into that documentation and hoping to see the sun afterwards.
 
+![]({{site.baseurl}}/images/170221-diagram.PNG)
