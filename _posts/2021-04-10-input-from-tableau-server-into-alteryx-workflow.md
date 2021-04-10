@@ -40,7 +40,7 @@ df.rename({0:'Datasource_Name', 1:'Datasource_ID'}, axis='columns', inplace=True
 
 Alteryx.write(df, 1)
 ```
-
+<br/>
 This code is very simple and very brief so I've (*naughty, I know*) not documented it throughout. In terms of understanding it, what I'm doing is:
 
 1. Importing packages
@@ -122,5 +122,5 @@ output = pd.DataFrame(data=dict_to_df)
 
 Alteryx.write(output,1)
 ```
-
+<br/>
 From here, you can simply put a dynamic input tool or a batch input macro and your Tableau Server datasource will be input into Alteryx.
