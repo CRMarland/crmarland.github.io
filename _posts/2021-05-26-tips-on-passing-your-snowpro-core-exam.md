@@ -2,7 +2,7 @@
 layout: post
 title: "Tips On Passing Your SnowPro Core Exam"
 date: 2021-05-26
-image: 20210526.snow-header.jpg
+image: images/20210526.snow-header.jpg
 tags: [Snowflake]
 ---
 
@@ -21,7 +21,7 @@ In terms of resources to use, Snowflake University and Snowflake's exam guides a
 - I also produced a PowerPoint to create some structure to my notes, but has also become a resource that quite a few of my colleagues at work have appreciated and used, I'd say 95% of the questions I got on my exam were covered by it.
 
 <iframe src="https://onedrive.live.com/embed?cid=031EFAC83F985321&resid=31EFAC83F985321%21499&authkey=AFJ2Z-bQeFiYenM&em=2" width="402" height="327" frameborder="0" scrolling="no"></iframe>
-
+<br>
 ### General Tips
 
 1 - I'd say about 1/3 or 1/4 of the exam was centred around the differences between editions and layers, questions like "X is available from which edition upwards?" and "where is Y stored?" - I suggest really getting to know the different layers and editions, what each layer does and what's available in each edition.
