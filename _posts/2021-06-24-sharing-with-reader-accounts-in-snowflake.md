@@ -45,7 +45,7 @@ SELECT *
 FROM SALES_PER_AWARD;
 ```
 
-</br>
+<br />
 
 What this produced was a secure view based on [Tableau's bookshop data](https://help.tableau.com/current/pro/desktop/en-us/bookshop_data.htm) looking like this:
 
@@ -67,7 +67,7 @@ CREATE MANAGED ACCOUNT reader_admin
     TYPE = READER;
 ```
 
-</br>
+<br />
 
 Or if you want to use the web interface, you can do so as below:
 
@@ -91,7 +91,7 @@ Next, you want to execute the following commands. What you are doing is:
 CREATE SHARE BOOKSHOP_SHARE;
 ```
 
-</br>
+<br />
 
 2. Grant usage on the database (replace DEMO with your database name and BOOKSHOP_SHARE with your share name), then on the schema (replace DEMO.BOOKSHOP with your schema name), and then on any view or tables you wish to include in the share (replace DEMO.BOOKSHOP.SALES_PER_AWARD with the view/table etc you wish to share)
 
@@ -103,7 +103,7 @@ GRANT USAGE ON SCHEMA DEMO.BOOKSHOP TO SHARE BOOKSHOP_SHARE;
 GRANT SELECT ON DEMO.BOOKSHOP.SALES_PER_AWARD TO SHARE BOOKSHOP_SHARE;
 ```
 
-</br>
+<br />
 
 3. Just check your grants and make sure your share has access to everything you want it to.
 
@@ -111,7 +111,7 @@ GRANT SELECT ON DEMO.BOOKSHOP.SALES_PER_AWARD TO SHARE BOOKSHOP_SHARE;
 SHOW GRANTS TO SHARE BOOKSHOP_SHARE;
 ```
 
-</br>
+<br />
 
 4. Now you need to establish the link between your share, and your reader admin account. To do this, you need to alter the share and add the **locator** value you noted down when executing the SHOW MANAGED ACCOUNTS command.
 
@@ -119,7 +119,7 @@ SHOW GRANTS TO SHARE BOOKSHOP_SHARE;
 ALTER SHARE BOOKSHOP_SHARE ADD ACCOUNTS = <insert_reader_account_admin_locator>;
 ```
 
-</br>
+<br />
 
 ## STEP 4: SET UP THE SHARE IN THE READER ADMIN ACCOUNT
 
@@ -135,7 +135,7 @@ All that's left is for your reader admin account to adopt the share. It's import
 CREATE WAREHOUSE READING_WH;
 ```
 
-</br>
+<br />
 
 2. Create a database using the share - replace READING_DB with whatever you wish to call your database, and YT1837."BOOKSHOP_SHARE" with the name of the share; the TT1837 bit is the locator of the data provider account.
 
@@ -143,7 +143,7 @@ CREATE WAREHOUSE READING_WH;
 CREATE DATABASE READING_DB FROM SHARE YT1837."BOOKSHOP_SHARE";
 ```
 
-</br>
+<br />
 
 3. Import the privileges attached to the share to your role(s) - replace READING_DB with your database name as chosen in 4.2, and replace ACCOUNTADMIN with whichever role you want to allocate the imported privileges to (I definitely suggest granting it to ACCOUNTADMIN though)
 
@@ -151,7 +151,7 @@ CREATE DATABASE READING_DB FROM SHARE YT1837."BOOKSHOP_SHARE";
 GRANT IMPORTED PRIVILEGES ON DATABASE READING_DB TO ROLE ACCOUNTADMIN;
 ```
 
-</br>
+<br />
 
 4. Test your share!
 
@@ -160,7 +160,7 @@ SELECT *
 FROM READING_DB.BOOKSHOP.SALES_PER_AWARD;
 ```
 
-</br>
+<br />
 
 Mine is looking pretty good!
 
