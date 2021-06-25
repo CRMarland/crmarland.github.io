@@ -3,7 +3,6 @@ layout: post
 title:  "Filling in Missing Dates in SQL"
 date:   2020-09-28
 image:  images/271120-cal.jpg
-tags:   [SQL]
 ---
 
 <span>Photo by <a href="https://unsplash.com/@waldemarbrandt67w?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Waldemar Brandt</a> on <a href="https://unsplash.com/s/photos/calendar?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>

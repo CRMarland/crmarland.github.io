@@ -3,7 +3,6 @@ layout: post
 title:  "Building a Socially Distanced Seat Allocator in Alteryx"
 date:   2020-09-28
 image:  images/28092020.input.png
-tags:   [Alteryx]
 ---
 
 As mentioned in a [**previous blog**][prev-blog], I wanted to create a social distancing seat-allocator app so that we could maximise the numbers of people being able to attend a service, whilst still keeping them safe. To do so, we first had to create a spatial object representing the church, you can find that blog here.

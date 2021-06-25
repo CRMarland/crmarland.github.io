@@ -3,7 +3,6 @@ layout: post
 title:  "Input from Tableau Server into Alteryx Workflow"
 date:   2021-04-10
 image:  images/100421-cover.png
-tags:   [Python]
 ---
 A week or so ago I accidentally claimed an Alteryx tool existed that didn't actually exist. I promise I had no intention to fool anyone, I was simply labouring under a misapprehension. For some reason, I was convinced that sitting beside the *Publish to Tableau Server* tool was an equally useful *Input from Tableau Server* tool. While I'm sure somewhere in the ideas forums this has been requested and re-requested, it does not - as of yet - exist.
 

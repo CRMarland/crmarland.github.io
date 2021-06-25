@@ -3,7 +3,6 @@ layout: post
 title:  "Getting Your Head Around AWS CloudFormation"
 date:   2021-02-17
 image:  images/170221-cover.PNG
-tags:   [AWS]
 ---
 # The Basics
 

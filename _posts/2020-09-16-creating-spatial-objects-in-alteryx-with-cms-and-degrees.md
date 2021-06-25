@@ -3,7 +3,6 @@ layout: post
 title:  "Creating Spatial Objects in Alteryx with CMs and Degrees"
 date:   2020-09-16
 image:  images/160920.blueprint.jpg
-tags:   [Alteryx]
 ---
 
 As we were nearing the end of lockdown in England, there was concern about how social distancing regulations would impact places of worship – could these old and heavy buildings contain entire congregations of worshipers in full? Well, possibly. What helped was that the government had specified that households could sit together. Perhaps by grouping households together, the availability of space could be maximised without putting anyone in any danger of catching corona virus.
