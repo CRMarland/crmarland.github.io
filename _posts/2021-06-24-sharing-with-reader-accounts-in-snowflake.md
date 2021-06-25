@@ -3,7 +3,6 @@ layout: post
 title: "Sharing with Reader Accounts in Snowflake"
 date: 2021-06-24
 image: images/240621readers.jpg
-tags: [Snowflake]
 ---
 
 Image by <a href="https://pixabay.com/users/stocksnap-894430/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2594786">StockSnap</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2594786">Pixabay</a>
